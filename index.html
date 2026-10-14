@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Little Stick Rugby</title>
+
+  <!-- The viewport tag tells a phone "render this at real phone width, don't
+       pretend to be a desktop and shrink everything", and user-scalable=no
+       stops pinch-zooming the page (we want pinches to reach the game, not the
+       browser).
+
+       Note there is deliberately no viewport-fit=cover. Drawing under the notch
+       is harmless at the top of a portrait screen, but held sideways the notch
+       runs down one EDGE - exactly where the thumbstick and the two buttons
+       live. Staying inside the safe area keeps all three reachable. -->
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+  <meta name="theme-color" content="#0a1f12" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <!-- Added to an iPhone's home screen, it opens full screen like an app, with
+       this icon and name. (On the claude.ai preview link the page is inside
+       claude.ai's own, so this only works where the game has its own address.) -->
+  <meta name="apple-mobile-web-app-title" content="Stick Rugby" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+  <link rel="manifest" href="manifest.webmanifest" />
+
+  <!-- The fonts, all free under the SIL Open Font Licence: Lilita One for the
+       home screen's buttons, Anton for the name printed on the ball, Barlow
+       Condensed and Barlow for the match screen, Doto (and VT323 behind it)
+       for the scoreboard's lights. If they cannot load (offline), the game
+       falls back to the plain fonts on the phone. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Lilita+One&family=Barlow+Condensed:ital,wght@0,700;0,800;0,900;1,900&family=Barlow:wght@500;600&family=Doto:wght@900&family=VT323&display=swap" />
+
+  <style>
+    html, body {
+      margin: 0; padding: 0;
+      width: 100%; height: 100%;
+      overflow: hidden;
+      background: #0a1f12;
+      /* Stop the browser hijacking drags for scrolling / pull-to-refresh.
+         Without this, sliding a thumb to aim would scroll the page instead. */
+      overscroll-behavior: none;
+      touch-action: none;
+      -webkit-user-select: none;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    }
+    #game { width: 100%; height: 100%; }
+    #game canvas { display: block; }
+
+    /* Landscape lock. The real screen.orientation.lock() API only works for
+       installed / fullscreen apps, so for a normal browser tab the reliable
+       approach is to cover the game with a "turn your phone" panel whenever
+       the window is taller than it is wide. */
+    #rotate {
+      position: fixed; inset: 0;
+      display: none;
+      align-items: center; justify-content: center;
+      flex-direction: column; gap: 18px;
+      background: #0a1f12; color: #cfe8d6;
+      text-align: center; padding: 24px;
+      z-index: 10;
+    }
+    #rotate .icon { font-size: 54px; }
+    #rotate .msg { font-size: 17px; letter-spacing: .02em; }
+    @media (orientation: portrait) and (max-width: 560px) {
+      #rotate { display: flex; }
+    }
+  </style>
+  <script type="module" crossorigin src="./assets/index-CUK8eACJ.js"></script>
+</head>
+<body>
+  <div id="game"></div>
+  <div id="rotate">
+    <div class="icon">&#128260;</div>
+    <div class="msg">Little Stick Rugby is played sideways.<br />Turn your phone to landscape.</div>
+  </div>
+</body>
+</html>
